@@ -1,0 +1,197 @@
+.playerContainer {
+  background: linear-gradient(135deg, #262626 0%, #0e0e0e 100%);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  color: white;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.trackInfo {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.trackTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.trackArtist {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.controlButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.controlButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.controlButton:active {
+  transform: scale(0.95);
+}
+
+.playButton {
+  background: rgba(255, 255, 255, 0.35);
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+}
+
+.playButton:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.volumeControl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.volumeSlider {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+}
+
+.volumeLabel {
+  font-size: 12px;
+  min-width: 30px;
+}
+
+.playlistDropdown {
+  position: relative;
+}
+
+.playlistButton {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.playlistButton:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.chevron {
+  transition: transform 0.2s ease;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+.playlistMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(38, 38, 39, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  margin-top: -1px;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.playlistItem {
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+  color: white;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  width: 100%;
+  display: block;
+}
+
+.playlistItem:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.playlistItem.active {
+  background: rgba(255, 255, 255, 0.25);
+  font-weight: 600;
+  border-left: 3px solid white;
+  padding-left: 11px;
+}
+
+.playlistItemContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.playlistItemTitle {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.playlistItemArtist {
+  font-size: 12px;
+  opacity: 0.8;
+}
