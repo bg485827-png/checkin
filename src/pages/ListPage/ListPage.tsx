@@ -13,7 +13,7 @@ export function ListPage() {
           <table>
             <thead>
               <tr>
-                <th>Name</th>
+                <th>Name s</th>
                 <th>Flight</th>
               </tr>
             </thead>
