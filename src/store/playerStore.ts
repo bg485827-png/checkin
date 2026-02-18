@@ -34,18 +34,6 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
       artist: 'Indie Dreams',
       url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     },
-    {
-      id: '2',
-      title: 'Digital Dawn',
-      artist: 'Electronic Waves',
-      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    },
-    {
-      id: '3',
-      title: 'Neon Nights',
-      artist: 'Synth Pop',
-      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    },
   ],
   currentTrackIndex: 0,
   isPlaying: false,

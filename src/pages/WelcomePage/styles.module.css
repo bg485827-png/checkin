@@ -12,6 +12,20 @@
   padding: 2.4rem;
   text-align: center;
 }
+.img {
+  width: 45rem;
+  display: block;
+
+  -webkit-mask-image: linear-gradient(to top, 
+    rgba(0,0,0,0) 0%, 
+    rgba(0,0,0,1) 40%
+  );
+  mask-image: linear-gradient(to top, 
+    rgba(0,0,0,0) 0%, 
+    rgba(0,0,0,1) 40%
+  );
+}
+
 
 .button {
   border: none;
