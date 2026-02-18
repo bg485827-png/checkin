@@ -37,7 +37,9 @@ export function ListPage() {
           </table>
         </div>
       )}
-      <MusicPlayer />
+      <div style={{ marginTop: 'auto', width: '100%' }}>
+        <MusicPlayer />
+      </div>
     </div>
   );
 }

@@ -4,13 +4,25 @@
   padding: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   color: white;
-  max-width: 400px;
+  width: 100%;
+  display: flex;
   margin: 0 auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.controlsContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .trackInfo {
   text-align: center;
-  margin-bottom: 16px;
+  min-width: 150px;
 }
 
 .trackTitle {
@@ -29,15 +41,14 @@
   justify-content: center;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
 }
 
 .controlButton {
   background: rgba(255, 255, 255, 0.2);
   border: none;
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  width: 33px;
+  height: 33px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,54 +68,102 @@
 
 .playButton {
   background: rgba(255, 255, 255, 0.35);
-  width: 56px;
-  height: 56px;
-  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  font-size: 16px;
 }
 
 .playButton:hover {
   background: rgba(255, 255, 255, 0.45);
 }
 
-.volumeControl {
+/* Progresso da Música (grande) */
+.progressControl {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 16px;
 }
 
-.volumeSlider {
+.progressSlider {
   flex: 1;
-  height: 4px;
-  border-radius: 2px;
+  height: 6px;
+  border-radius: 3px;
   background: rgba(255, 255, 255, 0.2);
   outline: none;
   -webkit-appearance: none;
   appearance: none;
 }
 
-.volumeSlider::-webkit-slider-thumb {
+.progressSlider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: white;
   cursor: pointer;
 }
 
-.volumeSlider::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
+.progressSlider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: white;
   cursor: pointer;
   border: none;
 }
 
-.volumeLabel {
+.timeLabel {
   font-size: 12px;
   min-width: 30px;
+  text-align: center;
+}
+
+/* Controle de Volume Pequeno */
+.volumeControlSmall {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  width: 30px;
+}
+
+.volumeSliderSmall {
+  width: 60px;
+  height: 4px;
+  border-radius: 2px;
+  transform: rotate(90deg);
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  appearance: none;
+  margin-top: 25px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.volumeSliderSmall::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+.volumeSliderSmall::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+}
+
+.volumeIcon {
+  font-size: 16px;
+  color: white;
+  margin-bottom: -20 !important;
 }
 
 .playlistDropdown {
@@ -114,18 +173,19 @@
 .playlistButton {
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 10px 14px;
+  padding: 5px 10px;
   border-radius: 6px;
   cursor: pointer;
   color: white;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 5px;
   transition: all 0.2s ease;
+  margin-top: 10px;
 }
 
 .playlistButton:hover {
