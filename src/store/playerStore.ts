@@ -1,5 +1,9 @@
 import { create } from 'zustand';
 import { Howl } from 'howler';
+import {
+  imagine_Dragons_Demons_Mp3,
+  impossible_Shontelle_Mp3,
+} from '../assets';
 
 export interface Track {
   id: string;
@@ -30,9 +34,15 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
   tracks: [
     {
       id: '1',
-      title: 'Sunset Boulevard',
-      artist: 'Indie Dreams',
-      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+      title: 'Impossible',
+      artist: 'Shontelle',
+      url: impossible_Shontelle_Mp3,
+    },
+    {
+      id: '2',
+      title: 'Demons',
+      artist: 'Imagine Dragons',
+      url: imagine_Dragons_Demons_Mp3,
     },
   ],
   currentTrackIndex: 0,
