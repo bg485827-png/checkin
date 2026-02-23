@@ -1,9 +1,6 @@
 import { create } from 'zustand';
 import { Howl } from 'howler';
-import {
-  imagine_Dragons_Demons_Mp3,
-  impossible_Shontelle_Mp3,
-} from '../assets';
+import { Music } from '../assets';
 
 export interface Track {
   id: string;
@@ -34,15 +31,9 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
   tracks: [
     {
       id: '1',
-      title: 'Impossible',
-      artist: 'Shontelle',
-      url: impossible_Shontelle_Mp3,
-    },
-    {
-      id: '2',
-      title: 'Demons',
-      artist: 'Imagine Dragons',
-      url: imagine_Dragons_Demons_Mp3,
+      title: 'Music',
+      artist: 'Music',
+      url: Music,
     },
   ],
   currentTrackIndex: 0,
