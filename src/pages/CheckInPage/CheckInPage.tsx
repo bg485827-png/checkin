@@ -4,7 +4,6 @@ import styles from './styles.module.css';
 import { useCheckInStore } from '../../store';
 import { useNavigate } from 'react-router-dom';
 
-
 const FLIGHTS = [
   'BR1888',
   'JP1908',
@@ -18,7 +17,8 @@ const FLIGHTS = [
 
 export function CheckInPage() {
   const navigate = useNavigate();
-  const addCheckIn = useCheckInStore(s => s.addCheckIn);
+
+  const startCheckIn = useCheckInStore((s) => s.startCheckIn);
 
   const [name, setName] = useState('');
   const [flight, setFlight] = useState('');
@@ -30,66 +30,63 @@ export function CheckInPage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!isFormValid) return;
-
-    addCheckIn({ name, flight });
-
+    startCheckIn({
+      name: name.trim(),
+      flightNumber: flight.trim(),
+    });
+    navigate('/welcome');
     setName('');
     setFlight('');
-    navigate('/welcome');
   }
 
   return (
-      <div className={styles.container}>
-        <div className={styles.title}>
-          <div>Welcome to Way Back Home</div>
-          <div>Please enter your name and select your option</div>
+    <div className={styles.container}>
+      <div className={styles.title}>
+        <div>Welcome to Way Back Home</div>
+        <div>Please enter your name and select your flight option below</div>
+      </div>
+
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.formRow}>
+          <label htmlFor="name">Enter your full name</label>
+          <input
+            className={styles.input}
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name"
+            autoComplete="off"
+          />
         </div>
 
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.formRow}>
-            <label htmlFor='name'>Name</label>
-            <input
-              className={styles.input}
-              id='name'
-              type='text'
-              value={name}
-              onChange={e => setName(e.target.value)}
-              placeholder='Your name'
-              autoComplete='off'
-            />
-          </div>
+        <div className={styles.formRow}>
+          <label htmlFor="flight">Flights</label>
+          <select
+            className={`${styles.input} ${!flight ? styles.placeholder : ''}`}
+            id="flight"
+            value={flight}
+            onChange={(e) => setFlight(e.target.value)}
+          >
+            <option value="" disabled hidden>
+              Select a flight
+            </option>
 
-          <div className={styles.formRow}>
-            <label htmlFor='flight'>Flights</label>
-            <select
-              className={`${styles.input} ${!flight ? styles.placeholder : ''}`}
-              id='flight'
-              value={flight}
-              onChange={e => setFlight(e.target.value)}
-            >
-              <option value='' disabled hidden>
-                Select a flight
+            {FLIGHTS.map((code) => (
+              <option key={code} value={code}>
+                {code}
               </option>
+            ))}
+          </select>
+        </div>
 
-              {FLIGHTS.map(code => (
-                <option key={code} value={code}>
-                  {code}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className={styles.formRow}>
-            <button
-              className={styles.button}
-              type='submit'
-              disabled={!isFormValid}
-            >
-              <span>CHECK IN</span>
-              <Plane size={18} />
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className={styles.formRow}>
+          <button className={styles.button} type="submit" disabled={!isFormValid}>
+            <span>CHECK IN</span>
+            <Plane size={18} />
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

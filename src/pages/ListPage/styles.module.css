@@ -32,41 +32,160 @@
   background-color: var(--gray-900);
 }
 
+/* ✅ NÃO use border-bottom no TD (causa degrau) */
 .responsiveTable th,
 .responsiveTable td {
-  border-bottom: 0.2rem solid var(--gray-700);
   text-align: left;
   padding: 1.6rem;
+  vertical-align: middle;
+  border-bottom: none;
 }
 
+/* ✅ borda contínua por linha */
+.responsiveTable tbody tr {
+  position: relative;
+}
+
+.responsiveTable tbody tr::after {
+  content: "";
+  position: absolute;
+  left: 1.6rem;   /* alinha com padding */
+  right: 1.6rem;  /* alinha com padding */
+  bottom: 0;
+  height: 0.2rem;
+  background: var(--gray-700);
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* hover continua igual, sem quebrar borda */
 .responsiveTable tbody tr:hover td {
   background-color: var(--gray-800);
 }
 
 .flightCell {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  justify-content: space-between;
+  column-gap: 1.2rem;
 }
 
+/* ✅ botão: camada isolada + contorno constante */
 .buttonTrash {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
+
+  width: 3.6rem;
+  height: 3.6rem;
+
   background-color: var(--primary);
-  color: red;
-  transition: all 0.1s ease-in-out;
-  padding: 0.8rem;
   border-radius: 0.8rem;
   cursor: pointer;
+
+  /* contorno constante (não depende do que tá atrás) */
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.35) inset;
+
+  /* isola de variações da linha */
+  isolation: isolate;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 .buttonTrash svg {
   width: 1.6rem;
   height: 1.6rem;
+  color: red;
 }
 
 .buttonTrash:hover {
-  filter: brightness(80%);
+  filter: brightness(0.9);
+}
+
+/* =========================
+   FLIP (estável)
+   ========================= */
+
+.tbodyFlip {
+  perspective: 900px;
+}
+
+.flipInner {
+  width: 100%;
+  min-height: 2.2rem;
+  display: flex;
+  align-items: center;
+
+  line-height: 1;
+  transform: translateZ(0);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+
+  animation: rowFlip 520ms ease-in-out;
+  animation-delay: var(--d, 0ms);
+
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.flipInner span {
+  display: inline-block;
+  line-height: 1;
+}
+
+@keyframes rowFlip {
+  0% {
+    transform: translateZ(0) rotateX(0deg);
+    opacity: 1;
+  }
+  45% {
+    transform: translateZ(0) rotateX(88deg);
+    opacity: 0.75;
+  }
+  55% {
+    transform: translateZ(0) rotateX(88deg);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateZ(0) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+/* glow opcional sem vazar */
+.flipGlow {
+  position: relative;
+  border-radius: 0.6rem;
+}
+
+.flipGlow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+  opacity: 0;
+  pointer-events: none;
+  animation: glowSweep 520ms ease-in-out;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes glowSweep {
+  0% { opacity: 0; transform: translateX(-12%); }
+  45% { opacity: 0.45; transform: translateX(0%); }
+  100% { opacity: 0; transform: translateX(12%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flipInner,
+  .flipGlow::after {
+    animation: none !important;
+  }
 }
