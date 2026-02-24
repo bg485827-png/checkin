@@ -38,16 +38,20 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
   ],
   currentTrackIndex: 0,
   isPlaying: false,
-  volume: 70,
+  volume: 100,
   howl: null,
 
-  setTracks: tracks => set({ tracks }),
+  setTracks: (tracks) => set({ tracks }),
 
   play: () => {
     const { howl } = get();
+    set({ isPlaying: true }); // ✅ sempre marca como tocando
     if (howl) {
-      howl.play();
-      set({ isPlaying: true });
+      try {
+        howl.play();
+      } catch {
+        // autoplay pode ser bloqueado; componente trata no playerror
+      }
     }
   },
 
@@ -61,13 +65,21 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
 
   togglePlay: () => {
     const { isPlaying, howl } = get();
-    if (!howl) return;
+    if (!howl) {
+      // se ainda não tem howl, só troca estado pra quando o howl existir
+      set({ isPlaying: !isPlaying });
+      return;
+    }
 
     if (isPlaying) {
       howl.pause();
       set({ isPlaying: false });
     } else {
-      howl.play();
+      try {
+        howl.play();
+      } catch {
+        // bloqueio de autoplay pode ocorrer, mas o gesto do usuário normalmente resolve
+      }
       set({ isPlaying: true });
     }
   },
@@ -85,7 +97,7 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
     set({ currentTrackIndex: previousIndex, isPlaying: false });
   },
 
-  setVolume: volume => {
+  setVolume: (volume) => {
     const { howl } = get();
     const clampedVolume = Math.max(0, Math.min(1, volume / 100));
     if (howl) {
@@ -94,9 +106,9 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
     set({ volume });
   },
 
-  setCurrentTrack: index => {
+  setCurrentTrack: (index) => {
     set({ currentTrackIndex: index, isPlaying: false });
   },
 
-  setHowl: howl => set({ howl }),
+  setHowl: (howl) => set({ howl }),
 }));

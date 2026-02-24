@@ -181,7 +181,6 @@ export function ListPage() {
             <tbody className={isFlipping ? styles.tbodyFlip : undefined}>
               {renderSlots.map((item, slotIndex) => (
                 <tr key={slotIndex}>
-                  {/* NAME: continua flipando o texto inteiro */}
                   <td>
                     <div
                       className={
@@ -193,11 +192,10 @@ export function ListPage() {
                           : undefined
                       }
                     >
-                      {item?.name ?? ''}
+                      <span>{item?.name ?? ''}</span>
                     </div>
                   </td>
 
-                  {/* FLIGHT: flip só no texto, botão fora (fixo) */}
                   <td className={styles.flightCell}>
                     <div
                       className={
@@ -234,9 +232,7 @@ export function ListPage() {
         <div>No check-ins yet.</div>
       )}
 
-      <div style={{ marginTop: 'auto', width: '100%' }}>
-        <MusicPlayer />
-      </div>
+      <MusicPlayer hidden autoPlay loopMode="playlist" />
     </div>
   );
 }
