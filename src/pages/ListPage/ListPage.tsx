@@ -16,7 +16,7 @@ const ROW_DELAY_MS = 90;
 const FLIP_DURATION_MS = 520;
 const SWAP_AT_MS = FLIP_DURATION_MS / 2;
 
-const PAGE_INTERVAL_MS = 3_000;
+const PAGE_INTERVAL_MS = 5_000;
 
 function toSlots(items: DisplayItem[]): Array<DisplayItem | null> {
   const slots: Array<DisplayItem | null> = Array(PAGE_SIZE).fill(null);
@@ -173,8 +173,9 @@ export function ListPage() {
           <table>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Flight</th>
+                <th colSpan={2} className={styles.departureHeader}>
+                  Departure Information
+                </th>
               </tr>
             </thead>
 

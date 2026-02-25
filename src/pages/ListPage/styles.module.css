@@ -70,6 +70,12 @@
   column-gap: 1.2rem;
 }
 
+.departureHeader {
+  text-align: center !important;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+}
+
 /* ✅ botão: camada isolada + contorno constante */
 .buttonTrash {
   display: inline-flex;
