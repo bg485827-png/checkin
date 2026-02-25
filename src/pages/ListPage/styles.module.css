@@ -49,8 +49,8 @@
 .responsiveTable tbody tr::after {
   content: "";
   position: absolute;
-  left: 1.6rem;   /* alinha com padding */
-  right: 1.6rem;  /* alinha com padding */
+  left: 1.6rem;
+  right: 1.6rem;
   bottom: 0;
   height: 0.2rem;
   background: var(--gray-700);
@@ -76,7 +76,6 @@
   text-transform: uppercase;
 }
 
-/* ✅ botão: camada isolada + contorno constante */
 .buttonTrash {
   display: inline-flex;
   align-items: center;
@@ -89,25 +88,29 @@
   border-radius: 0.8rem;
   cursor: pointer;
 
-  /* contorno constante (não depende do que tá atrás) */
   border: 1px solid rgba(255, 255, 255, 0.10);
   box-shadow: 0 0 0 1px rgba(0,0,0,0.35) inset;
 
-  /* isola de variações da linha */
-  isolation: isolate;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity 150ms ease, transform 150ms ease;
+  transform: translateY(4px);
+}
+
+.responsiveTable tbody tr:hover .buttonTrash,
+.responsiveTable tbody tr:focus-within .buttonTrash {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .buttonTrash svg {
   width: 1.6rem;
   height: 1.6rem;
   color: red;
-}
-
-.buttonTrash:hover {
-  filter: brightness(0.9);
 }
 
 /* =========================

@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoadingPage } from '../LoadingPage/LoadingPage';
 import { WelcomePage } from './WelcomePage';
 import { useCheckInStore } from '../../store';
+
+const WELCOME_IMAGE_SRC = '/caixa.png';
 
 export function WelcomeWrapper() {
   const navigate = useNavigate();
@@ -12,6 +14,9 @@ export function WelcomeWrapper() {
   const pendingPromise = useCheckInStore((s) => s.pendingPromise);
   const resolvePending = useCheckInStore((s) => s.resolvePending);
   const resetRequest = useCheckInStore((s) => s.resetRequest);
+  const [imageReady, setImageReady] = useState(false);
+  const [canShowWelcome, setCanShowWelcome] = useState(false);
+  const preloadStartedRef = useRef(false);
 
   useEffect(() => {
     if (!pendingPromise && status === 'idle') {
@@ -20,12 +25,47 @@ export function WelcomeWrapper() {
     }
 
     if (pendingPromise && status === 'loading') {
-      resolvePending(pendingPromise).catch(() => {
-      });
+      resolvePending(pendingPromise).catch(() => {});
     }
   }, [pendingPromise, resolvePending, status, navigate]);
 
-  if (status === 'loading') {
+  useEffect(() => {
+    if (status === 'loading' || status === 'error') return;
+    if (preloadStartedRef.current) return;
+
+    preloadStartedRef.current = true;
+
+    const img = new Image();
+    img.src = WELCOME_IMAGE_SRC;
+
+    if (img.complete) {
+      setImageReady(true);
+      return;
+    }
+
+    img.onload = () => setImageReady(true);
+    img.onerror = () => {
+      setImageReady(true);
+    };
+  }, [status]);
+  useEffect(() => {
+    if (status === 'loading') {
+      setCanShowWelcome(false);
+      return;
+    }
+
+    if (status === 'error') {
+      setCanShowWelcome(false);
+      return;
+    }
+
+    if (imageReady) {
+      const t = window.setTimeout(() => setCanShowWelcome(true), 16);
+      return () => window.clearTimeout(t);
+    }
+  }, [status, imageReady]);
+
+  if (status === 'loading' || !canShowWelcome) {
     return <LoadingPage />;
   }
 

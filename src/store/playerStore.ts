@@ -45,12 +45,12 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
 
   play: () => {
     const { howl } = get();
-    set({ isPlaying: true }); // ✅ sempre marca como tocando
+    set({ isPlaying: true });
     if (howl) {
       try {
         howl.play();
       } catch {
-        // autoplay pode ser bloqueado; componente trata no playerror
+        // ignore
       }
     }
   },
@@ -66,7 +66,6 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
   togglePlay: () => {
     const { isPlaying, howl } = get();
     if (!howl) {
-      // se ainda não tem howl, só troca estado pra quando o howl existir
       set({ isPlaying: !isPlaying });
       return;
     }
@@ -78,7 +77,7 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
       try {
         howl.play();
       } catch {
-        // bloqueio de autoplay pode ocorrer, mas o gesto do usuário normalmente resolve
+        // ignore
       }
       set({ isPlaying: true });
     }

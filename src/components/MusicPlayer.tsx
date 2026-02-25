@@ -40,7 +40,7 @@ export function MusicPlayer({
     setVolume,
     setCurrentTrack,
     setHowl,
-    play, // ✅ manter store coerente quando autoplay acontecer
+    play,
   } = usePlayerStore();
 
   const howlRef = useRef<Howl | null>(null);
@@ -48,7 +48,6 @@ export function MusicPlayer({
 
   const currentTrack = tracks[currentTrackIndex];
 
-  // autoPlay liga o play mesmo se store estiver false
   const shouldPlay = autoPlay || isPlaying;
 
   function cleanupUnlockListeners() {
@@ -59,13 +58,12 @@ export function MusicPlayer({
   }
 
   function attachUnlockGesture(sound: Howl) {
-    // evita duplicar
     if (unlockCleanupRef.current) return;
 
     const tryPlayOnGesture = () => {
       try {
         sound.play();
-        play(); // marca tocando no store
+        play();
       } catch {
         // ignore
       }
@@ -91,7 +89,6 @@ export function MusicPlayer({
 
     cleanupUnlockListeners();
 
-    // descarrega anterior
     if (howlRef.current) {
       howlRef.current.stop();
       howlRef.current.unload();
@@ -130,12 +127,10 @@ export function MusicPlayer({
     howlRef.current = sound;
     setHowl(sound);
 
-    // Se autoplay for bloqueado, o Howler dispara playerror
     sound.on('playerror', () => {
       attachUnlockGesture(sound);
     });
 
-    // tentativa inicial
     if (shouldPlay) {
       try {
         sound.play();
@@ -175,7 +170,7 @@ export function MusicPlayer({
       try {
         howlRef.current.play();
       } catch {
-        // se bloquear, playerror vai anexar o gesto
+        // ignore
       }
     } else {
       howlRef.current.pause();
@@ -214,7 +209,6 @@ export function MusicPlayer({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // invisível (ListPage)
   if (hidden) return null;
 
   return (
